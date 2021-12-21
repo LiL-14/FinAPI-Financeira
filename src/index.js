@@ -117,5 +117,22 @@ app.post("/withdraw", verifyIfExistsAccountCPF, (request, response) =>{
     return response.status(201).send();
 })
 
+//busca o Cpf pela data
+app.get("/statement/date",verifyIfExistsAccountCPF, (request, response) => {
+    const { customer } = request;
+    const { date } = request.query;
+
+    const dateFormat = new Date(date + "00:00");
+    
+    const statement = customer.statement.filter(
+        (statement) => 
+        statement.created_at.toDateString() ===
+        new Date(dateFormat).toDateString()
+    );
+
+
+    return response.json(statement);
+})
+
 //localhost:8080
 app.listen(8080);
