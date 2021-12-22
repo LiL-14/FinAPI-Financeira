@@ -117,7 +117,7 @@ app.post("/withdraw", verifyIfExistsAccountCPF, (request, response) =>{
     return response.status(201).send();
 })
 
-//busca o Cpf pela data
+//busca o deposito pela data
 app.get("/statement/date",verifyIfExistsAccountCPF, (request, response) => {
     const { customer } = request;
     const { date } = request.query;
@@ -131,6 +131,23 @@ app.get("/statement/date",verifyIfExistsAccountCPF, (request, response) => {
     );
 
     return response.json(statement);
+})
+
+//Atualizar informação 
+app.put("/account",verifyIfExistsAccountCPF, (request, response) => {
+    const { name } = request.body;
+    const { customer } = request;
+
+    customer.name = name;
+
+    return response.status(201).send();
+
+})
+
+app.get("/account", verifyIfExistsAccountCPF, (request, response) => {
+    const { customer } = request;
+
+    return response.json(customer);
 })
 
 //localhost:8080
